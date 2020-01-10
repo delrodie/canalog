@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Officine{% endblock %}
+
+{% block body %}
+    <h1>Officine</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ officine.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ officine.nom }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ officine.slug }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ officine.createdAt ? officine.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ officine.updatedAt ? officine.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('officine_index') }}">back to list</a>
+
+    <a href="{{ path('officine_edit', {'id': officine.id}) }}">edit</a>
+
+    {{ include('officine/_delete_form.html.twig') }}
+{% endblock %}

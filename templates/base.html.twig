@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Cana Optic :: {% endblock %}</title>
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ absolute_url(asset('ressources/css/bootstrap.min.css')) }}">
             <link rel="stylesheet" href="{{ absolute_url(asset('ressources/vendor/font-awesome/css/font-awesome.css')) }}">
@@ -37,10 +37,21 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Commandes</a>
                     </li>
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-cog"></i> Paramètres
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ path('officine_index') }}">Officine</a>
+                                <a class="dropdown-item" href="{{ path('user_index') }}">Utilisateurs</a>
+                            </div>
+                        </li>
+                    {% endif %}
                 </ul>
-                <a href="{{ path('app_logout') }}" class="nav-link" style="color:#ffffff">Deconnexion</a>
-                {% if is_granted('ROLE_SUPER_ADMIN') %}
-                    <a href="{{ path('user_index') }}" class="nav-link">Utilisateurs</a>
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    <a href="{{ path('app_logout') }}" class="nav-link" style="color:#ffffff">Deconnexion</a>
                 {% endif %}
             </div>
         </nav>
