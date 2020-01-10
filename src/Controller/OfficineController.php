@@ -39,6 +39,7 @@ class OfficineController extends AbstractController
             'officines' => $officineRepository->findByASC(),
             'officine' => $officine,
             'form' => $form->createView(),
+            'current_menu' => 'parametre'
         ]);
     }
 
@@ -62,6 +63,7 @@ class OfficineController extends AbstractController
         return $this->render('officine/new.html.twig', [
             'officine' => $officine,
             'form' => $form->createView(),
+            'current_menu' => 'parametre'
         ]);
     }
 
@@ -72,6 +74,7 @@ class OfficineController extends AbstractController
     {
         return $this->render('officine/show.html.twig', [
             'officine' => $officine,
+            'current_menu' => 'parametre'
         ]);
     }
 
@@ -95,6 +98,7 @@ class OfficineController extends AbstractController
             'officine' => $officine,
             'form' => $form->createView(),
             'officines' => $officineRepository->findByASC(),
+            'current_menu' => 'parametre'
         ]);
     }
 
