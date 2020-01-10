@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}} Gestion des modes d'opérations{% endblock %}
+
+{% block body %}
+    <div class="jumbotron jumbotron-fluid text-left">
+        <div class="container">
+            <h1>Gestion des modes d'opérations</h1>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card shadow-sm p-3 mb-5 bg-white rounded">
+                    <div class="card-body">
+                        <div class="card-title mb-5"><h4 class="h4">Liste des modes</h4></div>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>libelle</th>
+                                <th>actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for mode in modes %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ mode.libelle }}</td>
+                                    <td>
+                                        <a href="{{ path('mode_show', {'id': mode.id}) }}"><i class="fa fa-eye"></i></a> |
+                                        <a href="{{ path('mode_edit', {'id': mode.id}) }}"><i class="fa fa-edit"></i></a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="6">Aucun mode enregistré</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm p-3 mb-5 bg-white rounded">
+                    <div class="card-body">
+                        <div class="card-title mb-5">
+                            <h4 class="h4">Enregistrement</h4>
+                        </div>
+                        {{ include('mode/_form.html.twig') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
