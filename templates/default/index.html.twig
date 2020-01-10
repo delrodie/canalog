@@ -3,9 +3,264 @@
 {% block title %}Page d'accueil{% endblock %}
 
 {% block body %}
-        <div class="jumbotron jumbotron-fluid text-center">
-            <div class="container">
-                <h1>Accueil</h1>
+        <div class="container-fluid">
+            <div class="row mt-3">
+                <div class="col-3">
+                    <div class="row mb-2">
+                        <div class="col text-right">Total de ce mois : <span class="h5 text-danger">2.000.000</span> FCFA</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h6 class="h6 float-left">Recettes</h6>
+                            <span class="float-right">
+                                <a href="#" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#listRecette"><i class="fa fa-list"></i> Voir</a>
+                                <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addRecette"><i class="fa fa-plus"></i> Ajouter</a>
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Dates</th>
+                                    <th scope="col">Officines</th>
+                                    <th scope="col">Montants</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for i in 1..10 %}
+                                    <tr>
+                                        <th scope="row">{{i}}-01-2020</th>
+                                        <td>Marcory</td>
+                                        <td>250.000</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="row mb-2">
+                        <div class="col text-right">Total de ce mois : <span class="h5 text-danger">500.000</span> FCFA</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h6 class="h6 float-left">Depenses</h6>
+                            <span class="float-right">
+                                <a href="#" class="btn btn-sm btn-secondary"><i class="fa fa-list"></i> Voir</a>
+                                <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addDepense"><i class="fa fa-plus"></i> Ajouter</a>
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Dates</th>
+                                    <th scope="col">Officines</th>
+                                    <th scope="col">Montants</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for i in 1..10 %}
+                                    <tr>
+                                        <th scope="row">{{i}}-01-2020</th>
+                                        <td>Marcory</td>
+                                        <td>250.000</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row mb-2">
+                        <div class="col text-right">Total de ce mois : <span class="h5 text-danger">800.000</span> FCFA</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h6 class="h6 float-left">Commandes</h6>
+                            <span class="float-right">
+                                <a href="#" class="btn btn-sm btn-secondary"><i class="fa fa-list"></i> Voir</a>
+                                <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addCommande"><i class="fa fa-plus"></i> Ajouter</a>
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Dates</th>
+                                    <th scope="col">Fournisseurs</th>
+                                    <th scope="col">Prescription</th>
+                                    <th scope="col">Montant</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for i in 11..20 %}
+                                    <tr>
+                                        <th scope="row">{{i}}-01-2020</th>
+                                        <td>Miracle</td>
+                                        <td>OD:+2.5 | AD:+32</td>
+                                        <td>25.000</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+        <!-- Recette -->
+        <div class="modal fade" id="addRecette" tabindex="-1" role="dialog" aria-labelledby="Recette" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Enregistrement de Recette</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Recipient:</label>
+                            <input type="text" class="form-control" id="recipient-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Message:</label>
+                            <textarea class="form-control" id="message-text"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Send message</button>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- \Recette -->
+        <!-- Depense -->
+        <div class="modal fade" id="addDepense" tabindex="-1" role="dialog" aria-labelledby="Depense" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Enregistrement de depense</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Recipient:</label>
+                            <input type="text" class="form-control" id="recipient-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Message:</label>
+                            <textarea class="form-control" id="message-text"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Send message</button>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- \Depense -->
+        <!-- Commande -->
+        <div class="modal fade" id="addCommande" tabindex="-1" role="dialog" aria-labelledby="Depense" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Enregistrement de commande</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Recipient:</label>
+                            <input type="text" class="form-control" id="recipient-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Message:</label>
+                            <textarea class="form-control" id="message-text"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Send message</button>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- \Commande -->
+        <!-- Liste-->
+        <div class="modal fade" id="listRecette" tabindex="-1" role="dialog" aria-labelledby="ListDesRecettes" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Liste des recettes </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">
+                            <form>
+                                <div class="row mb-2">
+                                    <div class="col-md-4">
+                                        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                                            <option selected>Choose...</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="date" class="form-control form-control-sm" placeholder="First name">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="date" class="form-control form-control-sm" placeholder="Last name">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="btn btn-primary btn-sm">OK</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Dates</th>
+                            <th scope="col">Officines</th>
+                            <th scope="col">Montants</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for i in 10..30 %}
+                            <tr>
+                                <th scope="row">{{i}}-01-2020</th>
+                                <td>Marcory</td>
+                                <td>250.000</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- \Liste -->
 {% endblock %}
