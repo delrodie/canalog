@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Officine{% endblock %}
+{% block title %}{{parent()}} Gestion des Types d'opérations{% endblock %}
 
 {% block body %}
     <div class="jumbotron jumbotron-fluid text-left">
         <div class="container">
-            <h1>Gestion des officines</h1>
+            <h1>Gestion des types d'opérations</h1>
         </div>
     </div>
     <div class="container">
@@ -13,23 +13,23 @@
             <div class="col-md-8">
                 <div class="card shadow-sm p-3 mb-5 bg-white rounded">
                     <div class="card-body">
-                        <div class="card-title mb-5"><h4 class="h4">Liste des officines</h4></div>
+                        <div class="card-title mb-5"><h4 class="h4">Liste des types</h4></div>
                         <table class="table table-striped">
                             <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>Nom</th>
+                                <th>libelle</th>
                                 <th>actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {% for officine in officines %}
+                            {% for type in types %}
                                 <tr>
                                     <td>{{ loop.index }}</td>
-                                    <td>{{ officine.nom }}</td>
+                                    <td>{{ type.libelle }}</td>
                                     <td>
-                                        <a href="{{ path('officine_show', {'slug': officine.slug}) }}"><i class="fa fa-eye"></i></a> |
-                                        <a href="{{ path('officine_edit', {'slug': officine.slug}) }}"><i class="fa fa-edit"></i></a>
+                                        <a href="{{ path('type_show', {'id': type.id}) }}"><i class="fa fa-eye"></i></a> |
+                                        <a href="{{ path('type_edit', {'id': type.id}) }}"><i class="fa fa-edit"></i></a>
                                     </td>
                                 </tr>
                             {% else %}
@@ -48,15 +48,10 @@
                         <div class="card-title mb-5">
                             <h4 class="h4">Enregistrement</h4>
                         </div>
-                        {{ include('officine/_form.html.twig', {'button_label': 'Update'}) }}
+                        {{ include('type/_form.html.twig') }}
                     </div>
-                    {{ include('officine/_delete_form.html.twig') }}
                 </div>
             </div>
         </div>
     </div>
-
-
 {% endblock %}
-
-
