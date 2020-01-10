@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent()}} Liste des commandes {% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row mt-5 mb-3">
+            <div class="col-md-10">
+                <form action="{{ path('search_commande') }}" method="post">
+                    <div class="row mb-2">
+                        <div class="col-md-4">
+                            <select name="fseur" class="custom-select mr-sm-2">
+                                <option value="">Selectionnez...</option>
+                                {% for fseur in fournisseurs %}
+                                    <option value="{{fseur.id}}"><strong>{{fseur.nom}}</strong></option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="date" name="debutPeriode" class="form-control" placeholder="Debut période" required>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="date" name="finPeriode" class="form-control" placeholder="Fin période" required>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-primary">OK</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row mb-3">
+                    <div class="col text-right">Total commande : <span class="h5 text-danger">{{ commande_montant|number_format(0,'','.')}}</span> FCFA</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="h6 float-left">Commandes</h6>
+                        <span class="float-right">
+                            <form action="{{ path('etat_commande') }}" method="post" target="_blank">
+                                <input type="hidden" name="fseur" value="{{ fseur }}">
+                                <input type="hidden" name="debutPeriode" value="{{ date_debut }}">
+                                <input type="hidden" name="finPeriode" value="{{ date_fin }}">
+                                <button type="submit" class="btn btn-sm btn-secondary"><i class="fa fa-print"></i> Imprimer</button>
+                            </form>
+
+                        </span>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">Dates</th>
+                                <th scope="col">Fournisseurs</th>
+                                <th scope="col">Prescription</th>
+                                <th scope="col">Montant</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for commande in commandes|slice(0,10) %}
+                                <tr>
+                                    <th scope="row">{{ commande.date|date('d-m-Y')}}</th>
+                                    <td>
+                                        <a href="{{ path('commande_edit', {'id': commande.id}) }}">{{ commande.fournisseur.nom|upper}} </a>
+                                        {% if commande.livraison %} <span class="badge badge-success">Livré</span>{% else %}<span class="badge badge-danger">Non livré</span>{% endif %}
+                                    </td>
+                                    <td>{{ commande.prescription}}</td>
+                                    <td>{{ commande.montant|number_format(0,'','.')}}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

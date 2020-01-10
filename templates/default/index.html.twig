@@ -5,7 +5,7 @@
 {% block body %}
         <div class="container-fluid">
             <div class="row mt-3">
-                <div class="col-3">
+                <div class="col-sm-6 col-md-3">
                     <div class="row mb-2">
                         <div class="col text-right">Total de ce mois : <span class="h5 text-danger">2.000.000</span> FCFA</div>
                     </div>
@@ -39,7 +39,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-sm-6 col-md-3">
                     <div class="row mb-2">
                         <div class="col text-right">Total de ce mois : <span class="h5 text-danger">500.000</span> FCFA</div>
                     </div>
@@ -73,15 +73,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-sm-12 col-md-6">
                     <div class="row mb-2">
-                        <div class="col text-right">Total de ce mois : <span class="h5 text-danger">800.000</span> FCFA</div>
+                        <div class="col text-right">Total de ce mois : <span class="h5 text-danger">{{ commande_montant|number_format(0,'','.')}}</span> FCFA</div>
                     </div>
                     <div class="card">
                         <div class="card-header">
                             <h6 class="h6 float-left">Commandes</h6>
                             <span class="float-right">
-                                <a href="#" class="btn btn-sm btn-secondary"><i class="fa fa-list"></i> Voir</a>
+                                <a href="#" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#listCommande"><i class="fa fa-list"></i> Voir</a>
                                 <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addCommande"><i class="fa fa-plus"></i> Ajouter</a>
                             </span>
                         </div>
@@ -96,12 +96,15 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for i in 11..20 %}
+                                {% for commande in commandes|slice(0,10) %}
                                     <tr>
-                                        <th scope="row">{{i}}-01-2020</th>
-                                        <td>Miracle</td>
-                                        <td>OD:+2.5 | AD:+32</td>
-                                        <td>25.000</td>
+                                        <th scope="row">{{ commande.date|date('d-m-Y')}}</th>
+                                        <td>
+                                            <a href="{{ path('commande_edit', {'id': commande.id}) }}">{{ commande.fournisseur.nom|upper}} </a>
+                                            {% if commande.livraison %} <span class="badge badge-success">Livré</span>{% else %}<span class="badge badge-danger">Non livré</span>{% endif %}
+                                        </td>
+                                        <td>{{ commande.prescription}}</td>
+                                        <td>{{ commande.montant|number_format(0,'','.')}}</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -174,32 +177,9 @@
         <!-- Commande -->
         <div class="modal fade" id="addCommande" tabindex="-1" role="dialog" aria-labelledby="Depense" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Enregistrement de commande</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">Recipient:</label>
-                            <input type="text" class="form-control" id="recipient-name">
-                        </div>
-                        <div class="form-group">
-                            <label for="message-text" class="col-form-label">Message:</label>
-                            <textarea class="form-control" id="message-text"></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Send message</button>
-                </div>
-            </div>
+            {{ render(url('commande_new')) }}
         </div>
-    </div>
+        </div>
         <!-- \Commande -->
         <!-- Liste-->
         <div class="modal fade" id="listRecette" tabindex="-1" role="dialog" aria-labelledby="ListDesRecettes" aria-hidden="true">
@@ -263,4 +243,71 @@
         </div>
     </div>
         <!-- \Liste -->
+    <!-- Liste des commandes -->
+    <div class="modal fade" id="listCommande" tabindex="-1" role="dialog" aria-labelledby="ListDesRecettes" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Liste des commandes </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">
+                            <form action="{{ path('search_commande') }}" method="post">
+                                <div class="row mb-2">
+                                    <div class="col-md-4">
+                                        <select name="fseur" class="custom-select mr-sm-2">
+                                            <option value="">Selectionnez...</option>
+                                            {% for fseur in fournisseurs %}
+                                                <option value="{{fseur.id}}"><strong>{{fseur.nom}}</strong></option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="date" name="debutPeriode" class="form-control" placeholder="Debut période" required>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="date" name="finPeriode" class="form-control" placeholder="Fin période" required>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="btn btn-primary">OK</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Dates</th>
+                            <th scope="col">Fournisseurs</th>
+                            <th scope="col">Prescription</th>
+                            <th scope="col">Montant</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for commande in commandes|slice(0,50) %}
+                            <tr>
+                                <th scope="row">{{ commande.date|date('d-m-Y')}}</th>
+                                <td>
+                                    <a href="{{ path('commande_edit', {'id': commande.id}) }}">{{ commande.fournisseur.nom|upper}} </a>
+                                    {% if commande.livraison %} <span class="badge badge-success">Livré</span>{% else %}<span class="badge badge-danger">Non livré</span>{% endif %}
+                                </td>
+                                <td>{{ commande.prescription}}</td>
+                                <td>{{ commande.montant|number_format(0,'','.')}}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- \Liste des commandes -->
 {% endblock %}

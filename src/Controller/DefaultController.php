@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Repository\CommandeRepository;
+use App\Repository\FournisseurRepository;
 use App\Repository\OfficineRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,11 +14,13 @@ class DefaultController extends AbstractController
     /**
      * @Route("/", name="homepage")
      */
-    public function index()
+    public function index(CommandeRepository $commandeRepository, FournisseurRepository $fournisseurRepository)
     {
         return $this->render('default/index.html.twig', [
-            'controller_name' => 'DefaultController',
-            'current_menu' => 'accueil'
+            'current_menu' => 'accueil',
+            'commandes' => $commandeRepository->findByASC(),
+            'commande_montant' => $commandeRepository->getMontant(),
+            'fournisseurs' => $fournisseurRepository->findAll(),
         ]);
     }
 

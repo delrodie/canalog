@@ -19,6 +19,11 @@ class FournisseurRepository extends ServiceEntityRepository
         parent::__construct($registry, Fournisseur::class);
     }
 
+    public function liste()
+    {
+        return $this->createQueryBuilder('f');
+    }
+
     // /**
     //  * @return Fournisseur[] Returns an array of Fournisseur objects
     //  */
