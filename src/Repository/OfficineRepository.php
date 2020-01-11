@@ -18,6 +18,10 @@ class OfficineRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Officine::class);
     }
+    public function liste()
+    {
+        return $this->createQueryBuilder('o')->orderBy('o.nom','ASC');
+    }
 
     /**
      * Liste des officines par ordre alphabetique

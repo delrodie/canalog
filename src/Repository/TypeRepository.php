@@ -19,6 +19,11 @@ class TypeRepository extends ServiceEntityRepository
         parent::__construct($registry, Type::class);
     }
 
+    public function findByLibelle($libelle)
+    {
+        return $this->createQueryBuilder('t')->where('t.libelle LIKE :type')->setParameter('type', '%'.$libelle.'%');
+    }
+
     // /**
     //  * @return Type[] Returns an array of Type objects
     //  */

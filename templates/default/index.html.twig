@@ -7,7 +7,7 @@
             <div class="row mt-3">
                 <div class="col-sm-6 col-md-3">
                     <div class="row mb-2">
-                        <div class="col text-right">Total de ce mois : <span class="h5 text-danger">2.000.000</span> FCFA</div>
+                        <div class="col text-right">Total de ce mois : <span class="h5 text-danger">{{ recette_montant|number_format(0,'','.')}}</span> FCFA</div>
                     </div>
                     <div class="card">
                         <div class="card-header">
@@ -27,11 +27,18 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for i in 1..10 %}
+                                {% for entree in entrees|slice(0,10) %}
                                     <tr>
-                                        <th scope="row">{{i}}-01-2020</th>
-                                        <td>Marcory</td>
-                                        <td>250.000</td>
+                                        <th scope="row">{{entree.date|date('d-m-Y')}}</th>
+                                        <td>
+                                            <a href="{{ path('operation_edit', {'id': entree.id}) }}">{{entree.officine.nom}}</a>
+                                            {% if entree.mode.libelle == 'Espece' %}
+                                                <span class="badge badge-success">E</span>
+                                            {% else %}
+                                                <span class="badge badge-info">B</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ entree.montant|number_format(0,'','.')}}</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -41,13 +48,13 @@
                 </div>
                 <div class="col-sm-6 col-md-3">
                     <div class="row mb-2">
-                        <div class="col text-right">Total de ce mois : <span class="h5 text-danger">500.000</span> FCFA</div>
+                        <div class="col text-right">Total de ce mois : <span class="h5 text-danger">{{ depense_montant|number_format(0,'','.')}}</span> FCFA</div>
                     </div>
                     <div class="card">
                         <div class="card-header">
                             <h6 class="h6 float-left">Depenses</h6>
                             <span class="float-right">
-                                <a href="#" class="btn btn-sm btn-secondary"><i class="fa fa-list"></i> Voir</a>
+                                <a href="#" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#listDepense"><i class="fa fa-list"></i> Voir</a>
                                 <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addDepense"><i class="fa fa-plus"></i> Ajouter</a>
                             </span>
                         </div>
@@ -61,11 +68,18 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for i in 1..10 %}
+                                {% for depense in depenses|slice(0,10) %}
                                     <tr>
-                                        <th scope="row">{{i}}-01-2020</th>
-                                        <td>Marcory</td>
-                                        <td>250.000</td>
+                                        <th scope="row">{{depense.date|date('d-m-Y')}}</th>
+                                        <td>
+                                            <a href="{{ path('operation_edit', {'id': depense.id}) }}">{{depense.officine.nom}}</a>
+                                            {% if depense.mode.libelle == 'Espece' %}
+                                                <span class="badge badge-success">E</span>
+                                            {% else %}
+                                                <span class="badge badge-info">B</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ depense.montant|number_format(0,'','.')}}</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -117,60 +131,14 @@
         <!-- Recette -->
         <div class="modal fade" id="addRecette" tabindex="-1" role="dialog" aria-labelledby="Recette" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Enregistrement de Recette</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">Recipient:</label>
-                            <input type="text" class="form-control" id="recipient-name">
-                        </div>
-                        <div class="form-group">
-                            <label for="message-text" class="col-form-label">Message:</label>
-                            <textarea class="form-control" id="message-text"></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Send message</button>
-                </div>
-            </div>
+            {{ render(url('operation_new',{'libelle':'entree'})) }}
         </div>
     </div>
         <!-- \Recette -->
         <!-- Depense -->
         <div class="modal fade" id="addDepense" tabindex="-1" role="dialog" aria-labelledby="Depense" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Enregistrement de depense</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">Recipient:</label>
-                            <input type="text" class="form-control" id="recipient-name">
-                        </div>
-                        <div class="form-group">
-                            <label for="message-text" class="col-form-label">Message:</label>
-                            <textarea class="form-control" id="message-text"></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Send message</button>
-                </div>
-            </div>
+            {{ render(url('operation_new',{'libelle':'depense'})) }}
         </div>
     </div>
         <!-- \Depense -->
@@ -181,7 +149,7 @@
         </div>
         </div>
         <!-- \Commande -->
-        <!-- Liste-->
+        <!-- Liste recettes-->
         <div class="modal fade" id="listRecette" tabindex="-1" role="dialog" aria-labelledby="ListDesRecettes" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
             <div class="modal-content">
@@ -194,23 +162,31 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col">
-                            <form>
+                            <form action="{{ path('search_operation', {'type': 'entree'}) }}">
                                 <div class="row mb-2">
-                                    <div class="col-md-4">
-                                        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                                            <option selected>Choose...</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
+                                    <div class="col-md-3">
+                                        <select name="officine" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                                            <option value="">Selectionnez...</option>
+                                            {% for officine in officines %}
+                                                <option value="{{ officine.id }}">{{ officine.nom}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <select name="mode" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                                            <option value="">Mode...</option>
+                                            {% for mode in modes %}
+                                                <option value="{{ mode.id}}">{{mode.libelle}}</option>
+                                            {% endfor %}
                                         </select>
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="date" class="form-control form-control-sm" placeholder="First name">
+                                        <input type="date" name="date_debut" class="form-control form-control-sm" required>
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="date" class="form-control form-control-sm" placeholder="Last name">
+                                        <input type="date" name="date_fin" class="form-control form-control-sm" required>
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-1">
                                         <button class="btn btn-primary btn-sm">OK</button>
                                     </div>
                                 </div>
@@ -222,15 +198,107 @@
                         <tr>
                             <th scope="col">Dates</th>
                             <th scope="col">Officines</th>
+                            <th scope="col">Modes</th>
                             <th scope="col">Montants</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for i in 10..30 %}
+                        {% for entree in entrees|slice(0,50) %}
                             <tr>
-                                <th scope="row">{{i}}-01-2020</th>
-                                <td>Marcory</td>
-                                <td>250.000</td>
+                                <th scope="row">{{entree.date|date('d-m-Y')}}</th>
+                                <td>
+                                    <a href="{{ path('operation_edit', {'id': entree.id}) }}">{{entree.officine.nom}}</a>
+
+                                </td>
+                                <td>
+                                    {% if entree.mode.libelle == 'Espece' %}
+                                        <span class="badge badge-success">Espèce</span>
+                                    {% else %}
+                                        <span class="badge badge-info">{{entree.assurance}}</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ entree.montant|number_format(0,'','.')}}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- \Liste -->
+        <!-- Liste depenses-->
+        <div class="modal fade" id="listDepense" tabindex="-1" role="dialog" aria-labelledby="ListDesDepenses" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Liste des depenses </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">
+                            <form action="{{ path('search_operation', {'type': 'depense'}) }}">
+                                <div class="row mb-2">
+                                    <div class="col-md-3">
+                                        <select name="officine" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                                            <option value="">Selectionnez...</option>
+                                            {% for officine in officines %}
+                                                <option value="{{ officine.id }}">{{ officine.nom}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <select name="mode" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                                            <option value="">Mode...</option>
+                                            {% for mode in modes %}
+                                                <option value="{{ mode.id}}">{{mode.libelle}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="date" name="date_debut" class="form-control form-control-sm" required>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="date" name="date_fin" class="form-control form-control-sm" required>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button class="btn btn-primary btn-sm">OK</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Dates</th>
+                            <th scope="col">Officines</th>
+                            <th scope="col">Modes</th>
+                            <th scope="col">Montants</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for depense in depenses|slice(0,50) %}
+                            <tr>
+                                <th scope="row">{{depense.date|date('d-m-Y')}}</th>
+                                <td>
+                                    <a href="{{ path('operation_edit', {'id': depense.id}) }}">{{depense.officine.nom}}</a>
+
+                                </td>
+                                <td>
+                                    {% if depense.mode.libelle == 'Espece' %}
+                                        <span class="badge badge-success">Espèce</span>
+                                    {% else %}
+                                        <span class="badge badge-info">Bon</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ depense.montant|number_format(0,'','.')}}</td>
                             </tr>
                         {% endfor %}
                         </tbody>

@@ -1,0 +1,32 @@
+{{ form_start(form,{'attr':{'action': path('operation_edit',{'id': operation.id})}}) }}
+    <div class="form-group">
+        <div class="row">
+            <div class="col">
+                {{ form_row(form.type,{'attr':{'readonly':'readonly'}}) }}
+            </div>
+            <div class="col">
+                {{ form_row(form.mode) }}
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col">
+                {{ form_row(form.officine) }}
+            </div>
+            <div class="col">
+                {{ form_row(form.date) }}
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col">
+                {{ form_row(form.montant) }}
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col">
+                {{ form_row(form.assurance) }}
+            </div>
+        </div>
+    </div>
+    {{ form_rest(form) }}
+    <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+{{ form_end(form) }}

@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent()}} Modification de la operation{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <div class="card shadow-sm p-3 mb-5 bg-white rounded">
+                    <div class="card-body">
+                        <div class="card-title mb-5"><h4 class="h4">Liste des operations</h4></div>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">Dates</th>
+                                <th scope="col">Officines</th>
+                                <th scope="col">Montants</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for entree in entrees %}
+                                <tr>
+                                    <th scope="row">{{entree.date|date('d-m-Y')}}</th>
+                                    <td>
+                                        <a href="{{ path('operation_edit', {'id': entree.id}) }}">{{entree.officine.nom}}</a>
+                                        {% if entree.mode.libelle == 'Espece' %}
+                                            <span class="badge badge-success">E</span>
+                                        {% else %}
+                                            <span class="badge badge-info">B</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ entree.montant|number_format(0,'','.')}}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card shadow-sm p-3 mb-5 bg-white rounded">
+                    <div class="card-body">
+                        <div class="card-title mb-5">
+                            <h4 class="h4">Modification</h4>
+                        </div>
+                        {{ include('operation/_edit_form.html.twig', {'button_label': 'Modifier'}) }}
+                    </div>
+                    {{ include('operation/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+

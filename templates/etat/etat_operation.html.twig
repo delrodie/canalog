@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des {{ type }}s</title>
+    <link rel="stylesheet" href="{{ absolute_url(asset('ressources/css/bootstrap.min.css')) }}">
+    <link rel="stylesheet" href="{{ absolute_url(asset('ressources/vendor/font-awesome/css/font-awesome.css')) }}">
+</head>
+<body onload="window.print(); window.close()">
+<br><br>
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h3 class="h3">LISTE DES {{type|upper}}S</h3>
+    </div>
+</div>
+<br><br>
+<div class="row">
+    <div class="col-md-12">
+        <div class="row mb-3">
+            <div class="col ml-5">
+                Periode du <span style="font-weight: bold;">{{ date_debut|date('d-m-Y') }}</span> au <span style="font-weight: bold;">{{ date_fin|date('d-m-Y') }}</span>
+            </div>
+            <div class="col text-right mr-5">Total {{type}} : <span class="h5 text-danger">{{ type_montant|number_format(0,'','.')}}</span> FCFA</div>
+        </div>
+        <br><br>
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Dates</th>
+                        <th scope="col">Officines</th>
+                        <th scope="col">Modes</th>
+                        <th scope="col">Montant</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for operation in operations %}
+                        <tr>
+                            <th scope="row">{{ operation.date|date('d-m-Y')}}</th>
+                            <td>{{ operation.officine.nom|upper}} </td>
+                            <td>
+                                {% if operation.mode.libelle !='Espece' %}
+                                    {{operation.assurance}}
+                                {% else %}
+                                    {{ operation.mode.libelle}}
+                                {% endif %}
+                            </td>
+                            <td>{{ operation.montant|number_format(0,'','.')}}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

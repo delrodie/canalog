@@ -20,16 +20,11 @@
                     <li class="nav-item {% if current_menu is defined and current_menu =='accueil' %}active{% endif %}">
                         <a class="nav-link" href="#">Journal</a>
                     </li>
-                    <li class="nav-item dropdown {% if current_menu is defined and current_menu =='entree' %}active{% endif %}">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Entrées
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            {{ render(url('app_default_menu')) }}
-                        </div>
+                    <li class="nav-item">
+                        <a class="nav-link {% if current_menu is defined and current_menu =='entree' %}active{% endif %}" href="{{ path('search_operation', {'type': 'entree'}) }}">Entrees</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if current_menu is defined and current_menu =='depense' %}active{% endif %}" href="#">Depenses</a>
+                        <a class="nav-link {% if current_menu is defined and current_menu =='depense' %}active{% endif %}" href="{{ path('search_operation', {'type': 'depense'}) }}">Depenses</a>
                     </li>
                     <li class="nav-item {% if current_menu is defined and current_menu =='commande' %}active{% endif %}">
                         <a class="nav-link" href="{{ path('search_commande') }}">Commandes</a>
