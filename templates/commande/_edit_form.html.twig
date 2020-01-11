@@ -1,0 +1,30 @@
+{{ form_start(form,{'attr':{'action': path('commande_edit',{'id': commande.id})}}) }}
+    <div class="form-group">
+        <div class="row">
+            <div class="col">
+                {{ form_row(form.date) }}
+            </div>
+            <div class="col">
+                {{ form_row(form.fournisseur) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">{{ form_row(form.prescription) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                {{ form_row(form.montant) }}
+            </div>
+            <div class="col mt-5">
+                <div class="form-check">
+                    {{ form_widget(form.livraison) }}
+                    <label class="form-check-label" for="defaultCheck1">
+                        {{ form_label(form.livraison)}}
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_rest(form) }}
+    <div class="text-center"><button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button></div>
+{{ form_end(form) }}
