@@ -24,7 +24,7 @@ class CommandeType extends AbstractType
                 'query_builder'=>function(EntityRepository $repository){ return $repository->liste();},
                 'choice_label'=>'nom'
             ])
-            ->add('date', DateType::class,['attr'=>['class'=>'form-control', 'placeholder'=>"La date de commande", 'autocomplete'=>"off"], 'widget'=>'single_text', 'html5'=>true, 'required'=>false])
+            ->add('date', DateType::class,['attr'=>['class'=>'form-control', 'placeholder'=>"La date de commande", 'autocomplete'=>"off"], 'widget'=>'single_text', 'html5'=>true, 'required'=>true])
             ->add('prescription', TextType::class,['attr'=>['class'=>'form-control', 'placholder'=>'Les prescriptions de la commande', 'autocomplete'=>"off"]])
             ->add('montant', IntegerType::class,['attr'=>['class'=>'form-control', 'placeholder'=>'le montant de la commande', 'autocomplte'=>"off"]])
             ->add('livraison', CheckboxType::class,['attr'=>['class'=>'form-check-input'],'required'=>false])

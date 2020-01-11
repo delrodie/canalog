@@ -17,8 +17,11 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item {% if current_menu is defined and current_menu =='accueil' %}active{% endif %}">
-                        <a class="nav-link" href="#">Journal</a>
+                    <li class="nav-item ml-5 {% if current_menu is defined and current_menu =='accueil' %}active{% endif %}">
+                        <a class="nav-link" href="{{ path('homepage') }}">Accueil</a>
+                    </li>
+                    <li class="nav-item {% if current_menu is defined and current_menu =='journal' %}active{% endif %}">
+                        <a class="nav-link" href="{{ path('journal') }}">Journal</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% if current_menu is defined and current_menu =='entree' %}active{% endif %}" href="{{ path('search_operation', {'type': 'entree'}) }}">Entrees</a>

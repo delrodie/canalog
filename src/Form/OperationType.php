@@ -20,7 +20,7 @@ class OperationType extends AbstractType
         $type = $this->type;
 
         $builder
-            ->add('date', DateType::class,['attr'=>['class'=>'form-control', 'placeholder'=>"La date de l'opération", 'autocomplete'=>"off"], 'widget'=>'single_text', 'html5'=>true, 'required'=>false])
+            ->add('date', DateType::class,['attr'=>['class'=>'form-control', 'placeholder'=>"La date de l'opération", 'autocomplete'=>"off"], 'widget'=>'single_text', 'html5'=>true, 'required'=>true])
             ->add('montant', IntegerType::class,['attr'=>['class'=>"form-control", 'placeholder'=>"le montant de l'opération", 'autocomplete'=>"off"]])
             ->add('type', EntityType::class,[
                 'attr'=>['class'=>'form-control'],

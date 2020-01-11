@@ -379,3 +379,21 @@
     </div>
     <!-- \Liste des commandes -->
 {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+            $('#ajouter').click(function () {
+                if (document.getElementById('operation_montant').value !== ''){
+                    //
+                    document.getElementById('ajouter').innerHTML = 'Veuillez-patienter, enregistrement encours ...';
+                    //$(this).attr('visibility', 'hidden')
+                    document.setTimeout(function () {
+                        $(this).attr('disabled', 'disabled')
+                    }, 2);
+                }
+
+            });
+        });
+    </script>
+{% endblock %}

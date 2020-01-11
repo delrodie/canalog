@@ -87,4 +87,36 @@ class EtatController extends AbstractController
             'current_menu'=>$type
         ]);
     }
+
+    /**
+     * @Route("/journal/", name="etat_journal", methods={"GET","POST"})
+     */
+    public function journal(Request $request, OperationRepository $operationRepository, OfficineRepository $officineRepository)
+    {
+        $reqOfficine = $request->get('officine');
+        $debut = $request->get('date_debut');
+        $fin = $request->get('date_fin');
+
+        if ($reqOfficine){
+            $operations = $operationRepository->findJournal($reqOfficine,$debut,$fin);
+            $officine = $reqOfficine;
+        }elseif ($debut and $fin){
+            $operations = $operationRepository->findJournal(null,$debut,$fin);
+            $officine = null;
+        }else{
+            $operations = $operationRepository->findJournal();
+            $officine = null;
+            $debut = date('Y-m-01');
+            $fin = date('Y-m-d');
+        }
+        return $this->render('etat/etat_journal.html.twig', [
+            'operations' => $operations,
+            'officines' => $officineRepository->findAll(),
+            'date_debut' => $debut,
+            'date_fin' => $fin,
+            'officine' => $officine,
+            'current_menu' => 'journal'
+        ]);
+    }
+
 }

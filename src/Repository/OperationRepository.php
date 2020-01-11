@@ -180,6 +180,48 @@ class OperationRepository extends ServiceEntityRepository
             ;
     }
 
+    /**
+     * @param null $officine
+     * @param null $debut
+     * @param null $fin
+     * @return mixed
+     */
+    public function findJournal($officine=null,$debut=null,$fin=null)
+    {
+
+        if ($officine and $debut and $fin){
+            $q = $this->createQueryBuilder('o')
+                        ->where('o.officine = :officine')
+                        ->andWhere('o.date BETWEEN :debut AND :fin')
+                        ->orderBy('o.date','ASC')
+                        ->setParameters([
+                            'officine'=>$officine,
+                            'debut'=>$debut,
+                            'fin'=>$fin
+                        ])
+                ;
+        }elseif($debut and $fin){
+            $q = $this->createQueryBuilder('o')
+                    ->where('o.date BETWEEN :debut AND :fin')
+                    ->setParameters([
+                        'debut'=>$debut,
+                        'fin'=>$fin
+                    ])
+                ;
+        }else{
+            $q = $this->createQueryBuilder('o')
+                    ->where('o.date BETWEEN :debut AND :fin')
+                    ->orderBy('o.date','ASC')
+                    ->setParameters([
+                        'debut'=>date('Y-m-01'),
+                        'fin'=>date('Y-m-31')
+                    ])
+                ;
+        }
+
+        return $q->getQuery()->getResult();
+    }
+
     // /**
     //  * @return Operation[] Returns an array of Operation objects
     //  */
